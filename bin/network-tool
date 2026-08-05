@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export TOOLKIT_ROOT
+TOOLKIT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+VERSION_FILE="$TOOLKIT_ROOT/VERSION"
+
+show_help() {
+cat << EOF
+Network Diagnostic Toolkit
+
+Usage:
+  network-tool <module> <command>
+
+Modules:
+  interfaces
+  dns
+  ping
+  ports
+  routing
+  traceroute
+  http
+  ssl
+  firewall
+  connections
+  reports
+
+Commands:
+  help
+  version
+EOF
+}
+
+show_version() {
+    echo "Network Diagnostic Toolkit v$(cat "$VERSION_FILE")"
+}
+
+dispatch() {
+
+    local module="${1:-}"
+
+    shift || true
+
+   case "$module" in
+
+    interfaces)
+        source "$TOOLKIT_ROOT/modules/interfaces/interfaces.sh"
+        interfaces "$@"
+        ;;
+        
+        dns)
+        source "$TOOLKIT_ROOT/modules/dns/dns.sh"
+        dns "$@"
+        ;;
+
+        ping)
+        source "$TOOLKIT_ROOT/modules/ping/ping.sh"
+        ping_module "$@"
+        ;;
+
+        ports)
+        source "$TOOLKIT_ROOT/modules/ports/ports.sh"
+        ports "$@"
+        ;;
+
+        routing)
+        source "$TOOLKIT_ROOT/modules/routing/routing.sh"
+        routing "$@"
+        ;;
+
+        http)
+        source "$TOOLKIT_ROOT/modules/http/http.sh"
+        http "$@"
+        ;;
+
+        ssl)
+        source "$TOOLKIT_ROOT/modules/ssl/ssl.sh"
+        ssl "$@"
+        ;;
+
+
+    *)
+        echo "Module '$module' is under development."
+        ;;
+esac
+}
+
+main() {
+
+    if [[ $# -eq 0 ]]; then
+        show_help
+        exit 0
+    fi
+
+    case "$1" in
+        help)
+            show_help
+            ;;
+
+        version)
+            show_version
+            ;;
+
+        *)
+            dispatch "$@"
+            ;;
+    esac
+}
+
+main "$@"
