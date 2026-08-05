@@ -90,6 +90,11 @@ dispatch() {
         connections "$@"
         ;;
 
+        reports)
+        source "$TOOLKIT_ROOT/modules/reports/reports.sh"
+        reports "$@"
+        ;;
+
 
     *)
         echo "Module '$module' is under development."
