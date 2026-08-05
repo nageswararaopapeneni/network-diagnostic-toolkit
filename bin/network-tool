@@ -80,6 +80,16 @@ dispatch() {
         ssl "$@"
         ;;
 
+        firewall)
+        source "$TOOLKIT_ROOT/modules/firewall/firewall.sh"
+        firewall "$@"
+        ;;
+
+        connections)
+        source "$TOOLKIT_ROOT/modules/connections/connections.sh"
+        connections "$@"
+        ;;
+
 
     *)
         echo "Module '$module' is under development."
