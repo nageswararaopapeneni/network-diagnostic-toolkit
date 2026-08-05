@@ -9,7 +9,9 @@ VERSION_FILE="$TOOLKIT_ROOT/VERSION"
 
 show_help() {
 cat << EOF
-Network Diagnostic Toolkit
+==================================================
+ Network Diagnostic Toolkit v$(cat "$VERSION_FILE")
+==================================================
 
 Usage:
   network-tool <module> <command>
@@ -27,9 +29,22 @@ Modules:
   connections
   reports
 
-Commands:
-  help
-  version
+Global Commands:
+  help, --help, -h
+  version, --version, -v
+
+Examples:
+  network-tool interfaces list
+  network-tool dns lookup google.com
+  network-tool ping run google.com
+  network-tool ports scan google.com
+  network-tool routing table
+  network-tool http health https://google.com
+  network-tool ssl info google.com
+  network-tool firewall status
+  network-tool connections active
+  network-tool reports summary
+
 EOF
 }
 
@@ -95,7 +110,6 @@ dispatch() {
         reports "$@"
         ;;
 
-
     *)
         echo "Module '$module' is under development."
         ;;
@@ -109,19 +123,20 @@ main() {
         exit 0
     fi
 
-    case "$1" in
-        help)
-            show_help
-            ;;
+   case "$1" in
 
-        version)
-            show_version
-            ;;
+    help|--help|-h)
+        show_help
+        ;;
 
-        *)
-            dispatch "$@"
-            ;;
-    esac
+    version|--version|-v)
+        show_version
+        ;;
+
+    *)
+        dispatch "$@"
+        ;;
+esac
 }
 
 main "$@"
