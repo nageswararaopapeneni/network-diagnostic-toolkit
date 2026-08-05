@@ -8,8 +8,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/info.sh"
+
+# shellcheck source=/dev/null
 source "$SCRIPT_DIR/expiry.sh"
+
+# shellcheck source=/dev/null
 source "$SCRIPT_DIR/issuer.sh"
+
+# shellcheck source=/dev/null
 source "$SCRIPT_DIR/protocols.sh"
 
 ssl() {
@@ -18,7 +24,6 @@ ssl() {
     shift || true
 
     case "$command" in
-
         info)
             ssl_info "$@"
             ;;
