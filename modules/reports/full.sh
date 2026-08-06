@@ -4,8 +4,9 @@ set -euo pipefail
 
 reports_full() {
 
-    local report="network-report-$(date +%Y%m%d-%H%M%S).txt"
+    local report
 
+report="network-report-$(date +%Y%m%d-%H%M%S).txt"
     {
 
         echo "=============================================="
