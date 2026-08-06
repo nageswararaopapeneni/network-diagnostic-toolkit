@@ -1,0 +1,30 @@
+name: Bash CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Bash Syntax Check
+        run: |
+          find . -type f -name "*.sh" -exec bash -n {} \;
+
+      - name: Run ShellCheck
+        run: |
+          find . -type f -name "*.sh" -print0 | xargs -0 shellcheck -x -e SC1091

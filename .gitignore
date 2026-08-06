@@ -1,0 +1,33 @@
+# Logs
+logs/
+*.log
+
+# Generated reports
+reports/
+network-report-*.txt
+
+# Demo recordings (keep if you DON'T want them in Git)
+# docs/demo/*.cast
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Vim
+*.swp
+
+# Backup files
+*~
+
+# Environment files
+.env
+.env.*
+
+# Temporary files
+tmp/
+temp/
+
+# Bash history
+.bash_history
